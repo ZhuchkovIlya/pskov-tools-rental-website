@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pskov Tools Rental - Аренда строительной техники в Пскове</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ffa726);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .services {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .rent-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .rent-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .about {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            color: white;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .features {
+            list-style: none;
+        }
+
+        .features li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .contact {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Pskov Tools Rental</div>
+            <ul class="nav-links">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Аренда строительной техники в Пскове</h1>
+            <p>Профессиональные инструменты и техника для любых строительных задач</p>
+            <a href="#services" class="cta-button">Посмотреть каталог</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Наши услуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔨</div>
+                    <h3>Ручные инструменты</h3>
+                    <p>Дрели, шуруповерты, перфораторы, углошлифовальные машины</p>
+                    <div class="price">от 200 ₽/день</div>
+                    <button class="rent-button" onclick="openModal('Ручные инструменты')">Арендовать</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🚚</div>
+                    <h3>Строительная техника</h3>
+                    <p>Экскаваторы, погрузчики, автовышки, компрессоры</p>
+                    <div class="price">от 2500 ₽/день</div>
+                    <button class="rent-button" onclick="openModal('Строительная техника')">Арендовать</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Электроинструменты</h3>
+                    <p>Сварочные аппараты, генераторы, бетономешалки</p>
+                    <div class="price">от 500 ₽/день</div>
+                    <button class="rent-button" onclick="openModal('Электроинструменты')">Арендовать</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Подъемная техника</h3>
+                    <p>Краны, лебедки, домкраты, строительные леса</p>
+                    <div class="price">от 1000 ₽/день</div>
+                    <button class="rent-button" onclick="openModal('Подъемная техника')">Арендовать</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Измерительные приборы</h3>
+                    <p>Нивелиры, лазерные уровни, тепловизоры</p>
+                    <div class="price">от 300 ₽/день</div>
+                    <button class="rent-button" onclick="openModal('Измерительные приборы')">Арендовать</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🚛</div>
+                    <h3>Доставка</h3>
+                    <p>Быстрая доставка техники по Пскову и области</p>
+                    <div class="price">от 500 ₽</div>
+                    <button class="rent-button" onclick="openModal('Доставка')">Заказать</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Почему выбирают нас?</h2>
+                    <p>Pskov Tools Rental - ведущая компания по аренде строительной техники в Пскове. Мы работаем с 2018 года и помогли реализовать более 1000 проектов.</p>
+                    <ul class="features">
+                        <li>Современная техника европейских брендов</li>
+                        <li>Конкурентные цены и гибкие условия аренды</li>
+                        <li>Быстрая доставка в течение 2 часов</li>
+                        <li>Техническая поддержка 24/7</li>
+                        <li>Страхование всей арендуемой техники</li>
+                        <li>Профессиональные консультации</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <div style="background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 20px; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🏗️</div>
+                        <h3 style="color: white; margin-bottom: 1rem;">1000+ проектов</h3>
+                        <p style="color: white; opacity: 0.9;">Успешно реализованных проектов с нашей техникой</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>Телефон</h3>
+                    <p>+7 (8112) 123-456<br>+7 (911) 789-012</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email</h3>
+                    <p>info@pskovtools.ru<br>rent@pskovtools.ru</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Адрес</h3>
+                    <p>г. Псков, ул. Индустриальная, д. 15<br>Режим: 8:00-20:00</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <h3>Мессенджеры</h3>
+                    <p>WhatsApp: +7 (911) 789-012<br>Telegram: @pskovtools</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Pskov Tools Rental. Все права защищены.</p>
+            <p>ИП Иванов И.И. | ИНН: 123456789012 | ОГРНИП: 987654321098765</p>
+        </div>
+    </footer>
+
+    <!-- Модальное окно -->
+    <div id="rentalModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Заявка на аренду</h2>
+            <form id="rentalForm">
+                <div class="form-group">
+                    <label for="clientName">Ваше имя:</label>
+                    <input type="text" id="clientName" name="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">Телефон:</label>
+                    <input type="tel" id="clientPhone" name="clientPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientEmail">Email:</label>
+                    <input type="email" id="clientEmail" name="clientEmail">
+                </div>
+                <div class="form-group">
+                    <label for="equipmentType">Тип техники:</label>
+                    <select id="equipmentType" name="equipmentType" required>
+                        <option value="">Выберите тип техники</option>
+                        <option value="Ручные инструменты">Ручные инструменты</option>
+                        <option value="Строительная техника">Строительная техника</option>
+                        <option value="Электроинструменты">Электроинструменты</option>
+                        <option value="Подъемная техника">Подъемная техника</option>
+                        <option value="Измерительные приборы">Измерительные приборы</option>
+                        <option value="Доставка">Доставка</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rentalPeriod">Срок аренды:</label>
+                    <select id="rentalPeriod" name="rentalPeriod" required>
+                        <option value="">Выберите срок</option>
+                        <option value="1 день">1 день</option>
+                        <option value="3 дня">3 дня</option>
+                        <option value="1 неделя">1 неделя</option>
+                        <option value="2 недели">2 недели</option>
+                        <option value="1 месяц">1 месяц</option>
+                        <option value="Другое">Другое (укажите в комментариях)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comments">Комментарии:</label>
+                    <textarea id="comments" name="comments" rows="3" placeholder="Укажите конкретную модель техники, адрес доставки или другие пожелания"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Плавная прокрутка к секциям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Изменение прозрачности хедера при скролле
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Функции для модального окна
+        function openModal(equipmentType) {
+            const modal = document.getElementById('rentalModal');
+            const equipmentSelect = document.getElementById('equipmentType');
+            
+            modal.style.display = 'block';
+            equipmentSelect.value = equipmentType;
+            
+            // Анимация появления
+            setTimeout(() => {
+                modal.querySelector('.modal-content').style.transform = 'scale(1)';
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('rentalModal');
+            modal.style.display = 'none';
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('rentalModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Обработка отправки формы
+        document.getElementById('rentalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Получаем данные формы
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Имитация отправки заявки
+            alert(`Спасибо, ${data.clientName}! Ваша заявка на аренду "${data.equipmentType}" принята. Мы свяжемся с вами по телефону ${data.clientPhone} в течение 15 минут.`);
+            
+            // Закрываем модальное окно и сбрасываем форму
+            closeModal();
+            this.reset();
+            
+            // В реальном проекте здесь был бы код отправки данных на сервер
+            console.log('Данные заявки:', data);
+        });
+
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за карточками услуг
+        document.querySelectorAll('.service-card, .contact-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
